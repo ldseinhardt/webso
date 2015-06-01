@@ -1,12 +1,13 @@
 body {
-    padding-top: 70px;
-    padding-bottom: 30px;
-  } 
+  padding-top: 70px;
+  padding-bottom: 30px;
+} 
 
 .btn-file {
   position: relative;
   overflow: hidden;
 }
+
 .btn-file input[type=file] {
   position: absolute;
   top: 0;
@@ -21,7 +22,11 @@ body {
   cursor: inherit;
   display: block;
 }
+
 input[readonly] {
   background-color: white !important;
   cursor: text !important;
+}
+#conteudo-sobre, #conteudo-equipe, #conteudo-resultados {
+  display: none;
 }
