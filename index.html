@@ -9,6 +9,8 @@
   <!-- Links externos para as bibliotecas do Bootstrap -->
 	<link rel="stylesheet" href="css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+  <!-- Links externos para as bibliotecas do jquery-ui -->
+  <link rel="stylesheet" href="css/jquery-ui.css">
   <!-- Folha de estilos personalizada -->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" type="image/png" href="img/favicon.png" />
@@ -37,7 +39,7 @@
   </nav>
     	
   <div class="container theme-showcase" role="main">
-    <div class="row" id="conteudo-inicio">
+    <div class="row conteudo" id="conteudo-inicio">
       <div class="col-md-6">
         <div class="jumbotron">
           <h1>Spotlight App</h1>
@@ -93,14 +95,26 @@
             </div>
           </div>
         </div> 
-        <p align="right"><button id="submit" class="btn btn-default">Enviar</button></p>
+        <div class="row">
+          <div class="col-md-8">
+            <label for="confidence">Indice de Confiança:</label>
+            <input class="text" id="confidence" name="confidence" value="0.5" type="text" style="width: 35px; text-align:center; border: 0">            
+            <div id="confidence-slider" style="width: 200px"></div>
+          </div>
+          <div class="col-md-4">
+            <p align="right">
+              <button id="submit" class="btn btn-default">Enviar</button>
+            </p>
+          </div>
+        </div>
     </div>
   </div>
-  <div class="row" id="conteudo-sobre">sobre ...</div>
-  <div class="row" id="conteudo-equipe">equipe ...</div>
-  <div class="row" id="conteudo-resultados"></div>
+  <div class="row conteudo" id="conteudo-sobre">sobre ...</div>
+  <div class="row conteudo" id="conteudo-equipe">equipe ...</div>
+  <div class="row conteudo" id="conteudo-resultados"></div>
   
-  <script src="js/jquery.min.js"></script>	
+  <script src="js/jquery.min.js"></script> 
+  <script src="js/jquery-ui.js"></script>	
   <script src="js/bootstrap.min.js"></script>
   <script src="js/spotlightapp.js"></script>
 </body>	

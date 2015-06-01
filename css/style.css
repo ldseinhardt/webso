@@ -27,6 +27,7 @@ input[readonly] {
   background-color: white !important;
   cursor: text !important;
 }
+
 #conteudo-sobre, #conteudo-equipe, #conteudo-resultados {
   display: none;
 }

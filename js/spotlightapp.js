@@ -61,16 +61,38 @@ jQuery.fn.spotLight = function(options) {
           },
           function(data) { 
             console.log(JSON.stringify(data));
-            var string = data["results"]["bindings"][0]["isPrimaryTopicOf"]["value"];
-            var result = "";
-            result += ("Página na DBpedia: <a href=" + resources["@URI"] + " target=_blank>" + resources["@URI"] + "</a><br />");
-            result += ("Página na Wikipédia: <a href=" + string + " target=_blank>" + string + "</a><br />");
-            result += ("Tipos: " + (replaceAll(",", ", ", resources["@types"])) + "<br />");
-            result += ("Nome Amigável: " + resources["@surfaceForm"] + "<br />");
-            result += ("Offset no Texto: " + resources["@offset"] + "<br />");
-            result += ("Pontuação de Similaridade: " + resources["@similarityScore"] + "<br />");
-            result += ("Porcentagem do Segundo Rank: " + resources["@percentageOfSecondRank"] + "<br /><hr />");
-            self.append("<div class=\"col-md-6\"><h3>" + resources["@surfaceForm"] + "</h3>" + result + "</div>");
+
+            var types = "";
+            if (resources["@types"] != "") {
+              types += "<ul class=\"list-group\">";
+              $.each(resources["@types"].split(","), function(i, type) {
+                types += "<li class=\"list-group-item\">"+type+"</li>";  
+              });
+              types += "</ul>";
+            }
+
+            var isPrimaryTopicOf = data["results"]["bindings"][0]["isPrimaryTopicOf"]["value"];
+            var abstract = data["results"]["bindings"][0]["abstract"]["value"];
+            var thumbnail = data["results"]["bindings"][0]["thumbnail"]["value"];
+
+            var panel = "";
+            panel += "<div class=\"panel panel-default\">";
+            panel += "<div class=\"panel-heading\">";
+            panel += resources["@surfaceForm"];
+            panel += "</div>";
+            panel += "<div class=\"panel-body\">";
+            panel += "<div class=\"col-md-3\" style=\"text-align: center;\">";
+            panel += "<img src=\""+thumbnail+"\"  class=\"img-responsive img-thumbnail\" />";
+            panel += "<a href=" + resources["@URI"] + " target=_blank>DBpedia</a><br />";
+            panel += "<a href=" + isPrimaryTopicOf + " target=_blank>Wikipédia</a><br />";
+            panel += types;
+            panel += "</div>";
+            panel += "<div class=\"col-md-9\">";
+            panel += "<p align=\"justify\">"+abstract+"</p>";
+            panel += "</div>";
+            panel += "</div>";
+            panel += "</div>";
+            self.append(panel);
               //.append("<div class=\"col-sm-6\">")
               //Link para o recusro na DBpedia
               //.append("Página na DBpedia: <a href=" + resources["@URI"] + " target=_blank>" + resources["@URI"] + "</a><br />")
@@ -97,12 +119,22 @@ jQuery.fn.spotLight = function(options) {
     //.html("</div>")
 	}, "json");
   
-    $(".row").slideUp();
+    $(".conteudo").slideUp();
     $("#conteudo-resultados").slideDown("slow");
   return this; 
 };  
 
 $(function() { 
+  $("#confidence-slider").slider({
+    value:0.5,
+    min: 0,
+    max: 1,
+    step: 0.05,
+    change: function( event, ui ) {
+      $("#confidence").val(ui.value);
+    }
+  });
+
   // Marca o item do menu selecionado 
   $("#navbar li").click(function() {
     $("#navbar li").removeClass("active");
@@ -116,24 +148,24 @@ $(function() {
   
   // Menu: Inicio Click
   $("#menu-inicio").click(function() { 
-    $(".row").hide();
+    $(".conteudo").hide();
     $("#conteudo-inicio").slideDown("slow"); 
   });
   
   // Menu: Sobre Click
   $("#menu-sobre").click(function() { 
-    $(".row").hide();
+    $(".conteudo").hide();
     $("#conteudo-sobre").slideDown("slow");
   });
   
   // Menu: Equipe Click
   $("#menu-equipe").click(function() {  
-    $(".row").hide();
+    $(".conteudo").hide();
     $("#conteudo-equipe").slideDown("slow");
   });
   
   $("#conteudo-resultados").on("click", "#back", function() {
-    $(".row").hide();
+    $(".conteudo").hide();
     $("#conteudo-inicio").slideDown("slow"); 
   });
   
@@ -141,7 +173,10 @@ $(function() {
   $("#submit").click(function() {
     if($("#collapseOne").css("display") == "block") {
       //text
-      $("#conteudo-resultados").spotLight({ text: $("#text").val() });
+      $("#conteudo-resultados").spotLight({
+        text: $("#text").val(),
+        confidence: $("#confidence").val()
+      });
     } else if($("#collapseTwo").css("display") == "block") {
       //link      
     } else if($("#collapseThree").css("display") == "block") {
@@ -149,7 +184,10 @@ $(function() {
       if ($("#file")[0].files[0].type == "text/plain") {
         var reader = new FileReader();
         reader.onload = function() {
-          $("#conteudo-resultados").spotLight({ text: this.result });      
+          $("#conteudo-resultados").spotLight({
+            text: this.result,
+            confidence: $("#confidence").val()
+          });      
         }
         reader.readAsText($("#file")[0].files[0]);     
       } else {
