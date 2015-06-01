@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
+<head>
+	<title>Spotlight App</title>
+  <meta http-equiv="Content-Type" content="text/html"; charset="utf-8" />
+  <!-- Descrições do App -->
+	<meta name="description" content="Spotlight App" />
+  <meta name="author" content="Lidiane, Luan, Lúcio" />
+  <!-- Links externos para as bibliotecas do Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
+  <!-- Folha de estilos personalizada -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+</head>	
+<body role="document">
+    <!-- Barra de navegação fixa -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span id="menu-brand" class="navbar-brand">Spotlight App</span>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li id="menu-inicio" class="active"><a>Inicio</a></li>
+            <li id="menu-sobre"><a>Sobre</a></li>
+            <li id="menu-equipe"><a>Equipe</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    	
+    <div class="container theme-showcase" role="main">
+      <div id="conteudo-inicio" class="row">
+        <div class="col-md-6">
+          <!-- Main jumbotron for a primary marketing message or call to action -->
+          <div class="jumbotron">
+            <h1>Spotlight App</h1>
+            <p>Breve descrição do app.</p>
+          </div>          
+        </div>        
+        <div class="col-md-6">
+
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 id="-collapsible-group-item-#1-" class="panel-title">
+                  <a class="" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Entre com um texto
+                  </a>
+                <a class="anchorjs-link" href="#-collapsible-group-item-#1-"><span class="anchorjs-icon"></span></a></h4>
+              </div>
+              <div style="" aria-expanded="true" id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <div class="form-group">
+                    <textarea class="form-control" id="text">First documented in the 13th century, Berlin was the capital of the Kingdom of Prussia (1701–1918), the German Empire (1871–1918), the Weimar Republic (1919–33) and the Third Reich (1933–45). Berlin in the 1920s was the third largest municipality in the world. After World War II, the city became divided into East Berlin -- the capital of East Germany -- and West Berlin, a West German exclave surrounded by the Berlin Wall from 1961–89. Following German reunification in 1990, the city regained its status as the capital of Germany, hosting 147 foreign embassies.</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 id="-collapsible-group-item-#2-" class="panel-title">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Entre com um link
+                  </a>
+                <a class="anchorjs-link" href="#-collapsible-group-item-#2-"><span class="anchorjs-icon"></span></a></h4>
+              </div>
+              <div style="height: 0px;" aria-expanded="false" id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="url" placeholder="http://example.com/txt.html" />
+                  </div>            
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingThree">
+                <h4 id="-collapsible-group-item-#3-" class="panel-title">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  	Carregue um arquivo (txt)
+                  </a>
+                <a class="anchorjs-link" href="#-collapsible-group-item-#3-"><span class="anchorjs-icon"></span></a></h4>
+              </div>
+              <div aria-expanded="false" id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                 <input type="file" id="file" multiple/>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <p align="right">
+            <button id="submit" class="btn btn-default">Enviar</button>
+          </p>
+        </div>
+      </div>
+      
+      <div id="conteudo-sobre" class="row" style="display:none;">sobre ...</div>
+      <div id="conteudo-equipe" class="row" style="display:none;">equipe ...</div>
+      <div id="conteudo-resultados" class="row" style="display:none;"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>	
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="js/spotlightapp.js"></script>
+</body>	
+</html>
