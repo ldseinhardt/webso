@@ -6,12 +6,13 @@
   <!-- Descrições do App -->
 	<meta name="description" content="Spotlight App" />
   <meta name="author" content="Lidiane, Luan, Lúcio" />
-  <!-- Links externos para as bibliotecas do Bootstrap -->
+  <!-- Bootstrap -->
 	<link rel="stylesheet" href="css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-  <!-- Links externos para as bibliotecas do jquery-ui -->
+  <!-- jquery-ui -->
   <link rel="stylesheet" href="css/jquery-ui.css">
-  <!-- Folha de estilos personalizada -->
+  <!-- Font Awesome (Icones) -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" type="image/png" href="img/favicon.png" />
 </head>	
@@ -37,7 +38,6 @@
       </div>
     </div>
   </nav>
-    	
   <div class="container theme-showcase" role="main">
     <div class="row conteudo" id="conteudo-inicio">
       <div class="col-md-6">
@@ -46,7 +46,6 @@
           <p>Breve descrição do app.</p>
         </div>          
       </div>        
-        
       <div class="col-md-6">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
           <div class="panel panel-default">
@@ -68,27 +67,11 @@
           <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingTwo">
               <h4 id="-collapsible-group-item-#2-" class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Entre com um link</a>
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Carregue um arquivo (txt)</a>
                 <a class="anchorjs-link" href="#-collapsible-group-item-#2-"><span class="anchorjs-icon"></span></a>
               </h4>
             </div>
-            <div style="height: 0px;" aria-expanded="false" id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-              <div class="panel-body">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="url" placeholder="http://example.com/txt.html" />
-                </div>            
-              </div>
-            </div>
-          </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingThree">
-              <h4 id="-collapsible-group-item-#3-" class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Carregue um arquivo (txt)</a>
-                <a class="anchorjs-link" href="#-collapsible-group-item-#3-"><span class="anchorjs-icon"></span></a>
-              </h4>
-            </div>
-            <div aria-expanded="false" id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div aria-expanded="false" id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
               <div class="panel-body">
                 <input type="file" id="file" multiple/>
               </div>
@@ -103,7 +86,7 @@
           </div>
           <div class="col-md-4">
             <p align="right">
-              <button id="submit" class="btn btn-default">Enviar</button>
+              <button id="submit" class="btn btn-default">Enviar <i class="fa fa-angle-double-right"></i></button>
             </p>
           </div>
         </div>
