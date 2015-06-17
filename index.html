@@ -8,17 +8,20 @@
   <meta name="author" content="Lidiane, Luan, Lúcio" />
   <!-- Bootstrap -->
 	<link rel="stylesheet" href="css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-  <!-- jquery-ui -->
-  <link rel="stylesheet" href="css/jquery-ui.css">
+  <!-- Tema Material Design -->
+  <link rel="stylesheet" href="css/roboto.min.css" />
+  <link rel="stylesheet" href="css/material.min.css" />
+  <link rel="stylesheet" href="css/ripples.min.css" />
   <!-- Font Awesome (Icones) -->
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+  <!-- Estilo da página -->
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="img/favicon.png" />
-</head>	
+</head>
 <body role="document">
   <!-- Barra de navegação fixa -->
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar navbar navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -44,8 +47,8 @@
         <div class="jumbotron">
           <h1>Spotlight App</h1>
           <p>Breve descrição do app.</p>
-        </div>          
-      </div>        
+        </div>
+      </div>
       <div class="col-md-6">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
           <div class="panel panel-default">
@@ -63,7 +66,6 @@
               </div>
             </div>
           </div>
-
           <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingTwo">
               <h4 id="-collapsible-group-item-#2-" class="panel-title">
@@ -81,12 +83,12 @@
         <div class="row">
           <div class="col-md-8">
             <label for="confidence">Indice de Confiança:</label>
-            <input class="text" id="confidence" name="confidence" value="0.5" type="text" style="width: 35px; text-align:center; border: 0">            
-            <div id="confidence-slider" style="width: 200px"></div>
+            <input class="text" id="confidence" name="confidence" value="0.5" type="text" disabled="disabled">
+            <div id="confidence-slider" class="slider shor"></div>
           </div>
           <div class="col-md-4">
             <p align="right">
-              <button id="submit" class="btn btn-default">Enviar <i class="fa fa-angle-double-right"></i></button>
+              <button id="submit" class="btn btn-primary btn-fab btn-raised mdi-content-create"></button>
             </p>
           </div>
         </div>
@@ -95,10 +97,15 @@
   <div class="row conteudo" id="conteudo-sobre">sobre ...</div>
   <div class="row conteudo" id="conteudo-equipe">equipe ...</div>
   <div class="row conteudo" id="conteudo-resultados"></div>
-  
-  <script src="js/jquery.min.js"></script> 
-  <script src="js/jquery-ui.js"></script>	
+  <!-- jQuery -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.nouislider.min.js"></script>
+  <!-- Bootstrap -->
   <script src="js/bootstrap.min.js"></script>
+  <!-- Tema Material Design -->
+  <script src="js/ripples.min.js"></script>
+  <script src="js/material.min.js"></script>
+  <!-- Script da página -->
   <script src="js/spotlightapp.js"></script>
-</body>	
+</body>
 </html>

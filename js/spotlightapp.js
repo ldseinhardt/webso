@@ -1,167 +1,178 @@
-function replaceAll(find, replace, str) { 
-  return str.replace(new RegExp(find, 'g'), replace); 
-}
-
-jQuery.fn.PARSE = function(data) {
+/*
+  Função que formata em HTML os resultados e que
+  faz uma consulta SPARQL para obter resumo, imagem e link da wikipedia
+*/
+jQuery.fn.toHTML = function(data) {
   var self = this;
-
+  /* Mostra o botão voltar e os dados passados para o spotlight */
   $(".conteudo").hide(function() {
-    self
-      /* Botão voltar */
-      .html("<button id=\"back\" class=\"btn btn-default\"><span class=\"fa fa-angle-double-left\"> Voltar<span></button>")
-      /* Mostra o texto e o indice de confiança utilizados */
-      .append("<h3>Texto recebido:</h3>")
-      .append("<p align=\"justify\">"+data["@text"]+"</p>")
-      .append("<h3>Intervalo de confiança:</h3>")
-      .append("<button class=\"btn btn-sm-default btn-info disabled\">" + data["@confidence"] + "</button>")
-      .append("<h2>Recursos:</h2>")
-      .slideDown("slow")
-      .append("<div class=\"panel-group\" id=\"accordion-result\" role=\"tablist\" aria-multiselectable=\"true\"></div>");
-    });
-    /* Se houve marcações, então busca por link da wikipedia, imagem e resumo */ 
-    if(data["Resources"] != null) {  
-      $.each(data["Resources"], function(i, resources) {
-        /* endpoint SPARQL */
-        var endpoint = "http://dbpedia.org/sparql";     
-        $.post(endpoint, {
-            "default-graph-uri": "http://dbpedia.org",
-            "query" : "SELECT ?isPrimaryTopicOf ?thumbnail ?abstract WHERE { <" + resources["@URI"] + "> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ?isPrimaryTopicOf . <" + resources["@URI"] + "> <http://dbpedia.org/ontology/thumbnail> ?thumbnail . <" + resources["@URI"] + "> <http://dbpedia.org/ontology/abstract> ?abstract . FILTER (langMatches(lang(?abstract), \"pt\")) . }"
-          }, function(data) {
-            var dados = data["results"]["bindings"][0];
-            if (dados != null) {
-              var wiki = dados["isPrimaryTopicOf"]["value"];
-              var resumo = dados["abstract"]["value"];
-              var imagem = dados["thumbnail"]["value"];
+    var html = "";
+    html += "<button id=\"back\" class=\"btn btn-primary btn-fab btn-raised  mdi-navigation-arrow-back\"></button>";
+    html += "<h3>Texto recebido:</h3>";
+    html += "<div class=\"panel panel-primary\">";
+    html += "<div class=\"panel-body\"><p align=\"justify\">"+data["@text"]+"</p></div>";
+    html += "</div>";
+    html += "<h3>Intervalo de confiança:</h3>";
+    html += "<button class=\"btn btn-info text-arround\" disabled=\"disabled\">"+data["@confidence"]+"</button>";
+    html += "<h3>Recursos:</h3>";
+    html += "<div class=\"panel-group\" id=\"accordion-result\" role=\"tablist\" aria-multiselectable=\"true\"></div>";
+    self.html(html).slideDown("slow");
+  });
 
-              var panel = "";
-              panel += "<div class=\"panel panel-default\">";
-              panel += "<div class=\"panel-heading\" role=\"tab\" id=\"heading_"+i+"\">";
-              panel += "<h4 style=\"display: inline\" id=\"-collapsible-result-group-item-#"+i+"-\" class=\"panel-title\">";
-              panel += "<a class=\"collapsed\" data-toggle=\"collapse\" data-parent=\"#accordion-result\" href=\"#collapse"+i+"\" aria-expanded=\"false\" aria-controls=\"collapse"+i+"\">";
-              panel += resources["@surfaceForm"];
-              panel += "</a>";
-              panel += "<a class=\"anchorjs-link\" href=\"#-collapsible-result-group-item-#"+i+"-\"><span class=\"anchorjs-icon\"></span></a>";
-              panel += "</h4>";
-              panel += "<span class=\"btn-close\"><i class=\"fa fa-times\"></i></span>";
-              panel += "</div>";
-              panel += "<div aria-expanded=\"false\" id=\"collapse"+i+"\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"heading"+i+"\">";
-              panel += "<div class=\"panel-body\">";
-              panel += "<div class=\"col-md-3\" style=\"text-align: center;\">";
-              panel += "<img src=\""+imagem+"\"  class=\"img-responsive img-thumbnail\" />";
-              panel += "<a href="+resources["@URI"]+" target=_blank>DBpedia</a><br />";
-              panel += "<a href="+wiki+" target=_blank>Wikipédia</a><br />";
-              panel += "</div>";
-              panel += "<div class=\"col-md-9\">";
-              panel += "<p align=\"justify\">"+resumo+"</p>";
-              panel += "</div>";
-              panel += "</div>";
-              panel += "</div>";
-              panel += "</div>";
-              $("#accordion-result", self).append(panel);
-              $(".panel-collapse", self).first().addClass("in");
-            }
-          },
-        "json");        
-      });
-    }
+  /* Se houve marcações, então busca por resumo, imagem e link da wikipedia */ 
+  if(data["Resources"] != null) {
+    $.each(data["Resources"], function(i, resources) {
+      /* endpoint SPARQL */
+      $.post("http://dbpedia.org/sparql",
+        {
+          "default-graph-uri": "http://dbpedia.org",
+          "query" : "SELECT ?isPrimaryTopicOf ?thumbnail ?abstract WHERE { <" + resources["@URI"] + "> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ?isPrimaryTopicOf . <" + resources["@URI"] + "> <http://dbpedia.org/ontology/thumbnail> ?thumbnail . <" + resources["@URI"] + "> <http://dbpedia.org/ontology/abstract> ?abstract . FILTER (langMatches(lang(?abstract), \"pt\")) . }"
+        },
+        function(data) {
+          var dados = data["results"]["bindings"][0];
+          if (dados != null) {
+            var resumo = dados["abstract"]["value"];
+            var imagem = dados["thumbnail"]["value"];
+            var wikipedia = dados["isPrimaryTopicOf"]["value"];
+            var html = "";
+            html += "<div class=\"panel panel-default\">";
+            html += "<div class=\"panel-heading\" role=\"tab\" id=\"heading_"+i+"\">";
+            html += "<h4 style=\"display: inline\" id=\"-collapsible-result-group-item-#"+i+"-\" class=\"panel-title\">";
+            html += "<a class=\"collapsed\" data-toggle=\"collapse\" data-parent=\"#accordion-result\" href=\"#collapse"+i+"\" aria-expanded=\"false\" aria-controls=\"collapse"+i+"\">";
+            html += resources["@surfaceForm"];
+            html += "</a>";
+            html += "<a class=\"anchorjs-link\" href=\"#-collapsible-result-group-item-#"+i+"-\"><span class=\"anchorjs-icon\"></span></a>";
+            html += "</h4>";
+            html += "<span class=\"btn-close\"><i class=\"fa fa-times\"></i></span>";
+            html += "</div>";
+            html += "<div aria-expanded=\"false\" id=\"collapse"+i+"\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"heading"+i+"\">";
+            html += "<div class=\"panel-body\">";
+            html += "<div class=\"col-md-3\" style=\"text-align: center;\">";
+            html += "<img src=\""+imagem+"\"  class=\"img-responsive img-thumbnail\" />";
+            html += "<a href="+resources["@URI"]+" target=_blank>DBpedia</a><br />";
+            html += "<a href="+wikipedia+" target=_blank>Wikipédia</a><br />";
+            html += "</div>";
+            html += "<div class=\"col-md-9\">";
+            html += "<p align=\"justify\">"+resumo+"</p>";
+            html += "</div>";
+            html += "</div>";
+            html += "</div>";
+            html += "</div>";
+            /* Insere o resultado formatado */
+            $("#accordion-result", self).append(html);
+            /* Abre o primeiro elemento */
+            $(".panel-collapse", self).first().addClass("in");
+          }
+        },
+      "json");
+    });
+  }
 
   return this;
 };
 
-jQuery.fn.spotLight = function(options) { 
+/* Função que chama o Spotlight */
+jQuery.fn.spotLight = function(options) {
   var self = this;
 
   /* Servidor com problemas na rede ufpel */
   //var server = "http://spotlight.sztaki.hu:2222/rest/annotate/";
-  
+
   /* Servidor dbpedia em manutenção */
   var server = "http://spotlight.dbpedia.org/rest/annotate";
-  
+
   var settings = {
     text: "",
-    confidence : "0.5", 
+    confidence : "0.5",
     support : "0",
     spotter : "Default",
     disambiguator : "Default",
-    policy : "whitelist", 
+    policy : "whitelist",
     types : "",
-    sparql : "" 
+    sparql : ""
   }
-  
+
   if(options) {
 		$.extend(settings, options);
 	}
 
+  /* Mostra o icone carregando */
   $(".conteudo").slideUp("slow", function() {
     self
       .html("<p align=\"center\"><i class=\"fa fa-spinner fa-pulse fa-5x\"></i></p>")
       .show();
-  });  
-    
-  $.post(server, settings, function (data) { 
-    self.PARSE(data);
-	}, "json");
-  
-  return this; 
-};  
-
-$(function() {
-  /* Configura o slider de confiaça */ 
-  $("#confidence-slider").slider({
-    value: 0.5,
-    min: 0,
-    max: 1,
-    step: 0.05,
-    change: function( event, ui ) {
-      $("#confidence").val(ui.value);
-    }
   });
 
-  /* Marca o item do menu selecionado */ 
+  /* Envie uma requisição post ao spotlight para objter as anotações */
+  $.post(server, settings, function (data) {
+    self.toHTML(data);
+	}, "json");
+
+  return this;
+};
+
+/* Quando a página carregar */
+$(function() {
+  /* Inicializa o tema Material Design */
+  $.material.init();
+
+  /* Configura o slider de confiaça */
+  $("#confidence-slider").noUiSlider({
+    start: 0.5,
+    step: 0.05,
+    range: {
+      'min': 0,
+      'max': 1
+    }
+  }).on("slide", function() {
+      $("#confidence").val($(this).val());
+  });
+
+  /* Marca o item do menu selecionado */
   $("#navbar li").click(function() {
     $("#navbar li").removeClass("active");
     $(this).addClass("active");
   });
-  
+
   /* Menu: Spotlight App Click */
   $("#menu-brand").click(function() {
-    
+
   });
-  
+
   /* Menu: Inicio Click */
   $("#menu-inicio").click(function() {
     $(".conteudo").hide();
     $("#conteudo-inicio").slideDown("slow");
   });
-  
+
   /* Menu: Sobre Click */
   $("#menu-sobre").click(function() {
     $(".conteudo").hide();
     $("#conteudo-sobre").slideDown("slow");
   });
-  
+
   /* Menu: Equipe Click */
   $("#menu-equipe").click(function() {
     $(".conteudo").hide();
     $("#conteudo-equipe").slideDown("slow");
   });
-  
+
   /* Botão voltar */
   $("#conteudo-resultados").on("click", "#back", function() {
     $(".conteudo").hide();
-    $("#conteudo-inicio").slideDown("slow"); 
+    $("#conteudo-inicio").slideDown("slow");
   });
-  
+
   /* Botão Enviar, Roda o Spotlight */
   $("#submit").click(function() {
     if($("#collapseOne").css("display") == "block") {
-      /* text */
+      /* Texto */
       $("#conteudo-resultados").spotLight({
         text: $("#text").val(),
         confidence: $("#confidence").val()
       });
     } else if($("#collapseTwo").css("display") == "block") {
-      /* file */
+      /* Arquivo */
       if ($("#file")[0].files[0].type == "text/plain") {
         var reader = new FileReader();
         reader.onload = function() {
@@ -170,7 +181,7 @@ $(function() {
             confidence: $("#confidence").val()
           });
         }
-        reader.readAsText($("#file")[0].files[0]);     
+        reader.readAsText($("#file")[0].files[0]);
       } else {
         alert("formato de arquivo inválido");
       }
@@ -179,11 +190,11 @@ $(function() {
 
   /* Botão para eliminar resultados */
   $("#conteudo-resultados").on("click", ".btn-close", function() {
-    var result = $(this).parent().parent();      
+    var result = $(this).parent().parent();
     result.fadeOut("slow", function() {
-      var results = result.parent();
       result.remove();
-      $(".panel-collapse", results).first().addClass("in");
+      /* Abre o primeiro elemento */
+      $(".panel-collapse", "#accordion-result").first().addClass("in");
     });
   });
 });

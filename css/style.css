@@ -1,10 +1,11 @@
 body {
+  padding: 10px;
   padding-top: 70px;
   padding-bottom: 30px;
 } 
 
-#conteudo-sobre, 
-#conteudo-equipe, 
+#conteudo-sobre,
+#conteudo-equipe,
 #conteudo-resultados {
   display: none;
 }
@@ -19,8 +20,26 @@ textarea {
   overflow: visible !important;
 }
 
+#confidence {
+  width: 35px; 
+  background: #eee;
+  text-align: center;
+  border: 0;
+}
+
+#confidence-slider {
+  width: 165px;
+}
+
+.text-arround {
+  padding: 17px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 360px;
+}
+
 .btn-close {
-  float: right; 
-  color: #f44336; 
+  float: right;
+  color: #f44336;
   cursor: pointer;
 }

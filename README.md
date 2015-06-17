@@ -5,4 +5,3 @@ Lidiane Costa, Luan Einhardt, Lúcio Leal
 
 versão 0.1
 28/05/2015
-
