@@ -43,3 +43,8 @@ textarea {
   color: #f44336;
   cursor: pointer;
 }
+
+#equipe {
+  margin: auto;
+  width: 420px;
+}

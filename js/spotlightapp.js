@@ -59,9 +59,12 @@ jQuery.fn.toHTML = function(data) {
             html += "</div>";
             html += "</div>";
             /* Insere o resultado formatado */
-            $("#accordion-result", self).append(html);
+            $("#accordion-result", self)
+              .append(html);
             /* Abre o primeiro elemento */
-            $(".panel-collapse", self).first().addClass("in");
+            $(".panel-collapse", self)
+              .first()
+              .collapse('show');
           }
         },
       "json");
@@ -136,7 +139,9 @@ $(function() {
 
   /* Menu: Spotlight App Click */
   $("#menu-brand").click(function() {
-
+    $(this).animate({opacity: 0, left: "-=100"}, 2000, function() {
+      $(this).animate({opacity: 1, left: "+=100"}, 1000);
+    });
   });
 
   /* Menu: Inicio Click */
@@ -190,11 +195,18 @@ $(function() {
 
   /* Botão para eliminar resultados */
   $("#conteudo-resultados").on("click", ".btn-close", function() {
-    var result = $(this).parent().parent();
-    result.fadeOut("slow", function() {
-      result.remove();
+    var panel = $(this).parent().parent();
+    panel.fadeOut("slow", function() {
+      var open = $(".panel-collapse", panel).attr("aria-expanded") == "true";
+      panel.remove();
       /* Abre o primeiro elemento */
-      $(".panel-collapse", "#accordion-result").first().addClass("in");
+
+      //alert($("#collapseTwo").attr("aria-expanded"));
+      if (open) {
+        $(".panel-collapse", "#accordion-result")
+          .first()
+          .collapse('show');
+      }
     });
   });
 });
