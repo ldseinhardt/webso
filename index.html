@@ -21,7 +21,7 @@
 </head>
 <body role="document">
   <!-- Barra de navegação fixa -->
-  <nav class="navbar navbar navbar-fixed-top">
+  <nav class="navbar navbar-warning navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -30,7 +30,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <span id="menu-brand" class="navbar-brand">Spotlight App</span>
+        <span id="menu-brand" class="navbar-brand">Spotlight app</span>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
@@ -44,9 +44,11 @@
   <div class="container theme-showcase" role="main">
     <div class="row conteudo" id="conteudo-inicio">
       <div class="col-md-6">
-        <div class="jumbotron">
-          <h1>Spotlight App</h1>
-          <p>Breve descrição do app.</p>
+        <div class="jumbotron" style="text-align: center">
+          <h1>Spotlight app</h1>
+          <p>
+            <img src="img/icon-256.png" width="230" height=\"230\" />
+          </p>
         </div>
       </div>
       <div class="col-md-6">
@@ -61,7 +63,9 @@
             <div style="" aria-expanded="true" id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
               <div class="panel-body">
                 <div class="form-group">
-                  <textarea class="form-control" id="text">First documented in the 13th century, Berlin was the capital of the Kingdom of Prussia (1701–1918), the German Empire (1871–1918), the Weimar Republic (1919–33) and the Third Reich (1933–45). Berlin in the 1920s was the third largest municipality in the world. After World War II, the city became divided into East Berlin -- the capital of East Germany -- and West Berlin, a West German exclave surrounded by the Berlin Wall from 1961–89. Following German reunification in 1990, the city regained its status as the capital of Germany, hosting 147 foreign embassies.</textarea>
+                  <div class="form-group has-warning">
+                    <textarea class="form-control" id="text">First documented in the 13th century, Berlin was the capital of the Kingdom of Prussia (1701–1918), the German Empire (1871–1918), the Weimar Republic (1919–33) and the Third Reich (1933–45). Berlin in the 1920s was the third largest municipality in the world. After World War II, the city became divided into East Berlin -- the capital of East Germany -- and West Berlin, a West German exclave surrounded by the Berlin Wall from 1961–89. Following German reunification in 1990, the city regained its status as the capital of Germany, hosting 147 foreign embassies.</textarea>
+                  </div>
                 </div>
               </div>
             </div>
@@ -75,7 +79,7 @@
             </div>
             <div aria-expanded="false" id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
               <div class="panel-body">
-                <input type="file" id="file" class="btn btn-primary btn-flat btn-fab btn-raised fa fa-file-text-o" title="" />
+                <input type="file" id="file" class="btn btn-danger btn-flat btn-fab btn-raised fa fa-file-text-o" title="" />
               </div>
             </div>
           </div>
@@ -84,11 +88,11 @@
           <div class="col-md-8">
             <label for="confidence">Indice de Confiança:</label>
             <input class="text" id="confidence" name="confidence" value="0.5" type="text" disabled="disabled">
-            <div id="confidence-slider" class="slider shor"></div>
+            <div id="confidence-slider" class="slider slider-warning shor"></div>
           </div>
           <div class="col-md-4">
             <p align="right">
-              <button id="submit" class="btn btn-primary btn-fab btn-raised mdi-content-create"></button>
+              <button id="submit" class="btn btn-warning btn-fab btn-raised mdi-content-create"></button>
             </p>
           </div>
         </div>
@@ -97,56 +101,61 @@
   <div class="row conteudo" id="conteudo-sobre">
     <div class="panel panel-default">
       <div class="panel-body">
-        <p align="left">
-          Sobre . . .
-        </p>
-        <p align="right">
-          <a href="https://github.com/llbastos/webso" target="_blank" class="btn btn-primary btn-flat btn-fab fa fa-github" title="Projeto no GitHub"></a>
-        </p> 
+        <div style="text-align: center">
+          <p>
+            <h3>Conheça nosso projeto no GitHub</h3>
+            <h3>Em breve documentação detalhada a respeito do projeto</h3>
+            <a href="https://github.com/llbastos/webso" target="_blank" class="btn btn-danger btn-flat btn-fab fa fa-github" title="Projeto no GitHub"></a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
   <div class="row conteudo" id="conteudo-equipe">
-    <div id="equipe" class="list-group">
-      <div class="list-group-item">
-        <div class="row-picture">
-          <img class="circle" src="img/lidiane.jpg" alt="Lidiane Costa">
-        </div>
-        <div class="row-content">
-          <h4 class="list-group-item-heading">Lidiane Costa</h4>
-          <p class="list-group-item-text">
-            Graduanda em Ciência da Computação - UFPel<br />
-            <a href="mailto:lidicostas@gmail.com">lidicostas@gmail.com</a>
-          </p>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div id="equipe" class="list-group">
+          <div class="list-group-item">
+            <div class="row-picture">
+              <img class="circle" src="img/lidiane.jpg" alt="Lidiane Costa">
+            </div>
+            <div class="row-content">
+              <h4 class="list-group-item-heading">Lidiane Costa</h4>
+              <p class="list-group-item-text">
+                Graduanda em Ciência da Computação - UFPel<br />
+                <a href="mailto:lidicostas@gmail.com">lcdsilva@inf.ufpel.edu.br</a>
+              </p>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
+          <div class="list-group-item">
+            <div class="row-picture">
+              <img class="circle" src="img/luan.jpg" alt="Luan Einhardt">
+            </div>
+            <div class="row-content">
+              <h4 class="list-group-item-heading">Luan Einhardt</h4>
+              <p class="list-group-item-text">
+                Graduando em Ciência da Computação - UFPel<br />
+                <a href="mailto:ldseinhardt@inf.ufpel.edu.br">ldseinhardt@inf.ufpel.edu.br</a>
+              </p>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
+          <div class="list-group-item">
+            <div class="row-picture">
+              <img class="circle" src="img/lucio.jpg" alt="Lúcio Leal Bastos">
+            </div>
+            <div class="row-content">
+              <h4 class="list-group-item-heading">Lúcio Leal Bastos</h4>
+              <p class="list-group-item-text">
+                Graduando em Ciência da Computação - UFPel<br />
+                <a href="mailto:luciolb@gmail.com">llbastos@inf.ufpel.edu.br</a>
+              </p>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
         </div>
       </div>
-      <div class="list-group-separator"></div>
-      <div class="list-group-item">
-        <div class="row-picture">
-          <img class="circle" src="img/luan.jpg" alt="Luan Einhardt">
-        </div>
-        <div class="row-content">
-          <h4 class="list-group-item-heading">Luan Einhardt</h4>
-          <p class="list-group-item-text">
-            Graduando em Ciência da Computação - UFPel<br />
-            <a href="mailto:ldseinhardt@inf.ufpel.edu.br">ldseinhardt@inf.ufpel.edu.br</a>
-          </p>
-        </div>
-      </div>
-      <div class="list-group-separator"></div>
-      <div class="list-group-item">
-        <div class="row-picture">
-          <img class="circle" src="img/lucio.jpg" alt="Lúcio Leal Bastos">
-        </div>
-        <div class="row-content">
-          <h4 class="list-group-item-heading">Lúcio Leal Bastos</h4>
-          <p class="list-group-item-text">
-            Graduando em Ciência da Computação - UFPel<br />
-            <a href="mailto:luciolb@gmail.com">luciolb@gmail.com</a>
-          </p>
-        </div>
-      </div>
-      <div class="list-group-separator"></div>
     </div>
   </div>
   <div class="row conteudo" id="conteudo-resultados"></div>

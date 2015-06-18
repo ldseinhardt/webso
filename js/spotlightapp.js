@@ -6,19 +6,20 @@ jQuery.fn.toHTML = function(data) {
   var self = this;
   /* Mostra o botão voltar e os dados passados para o spotlight */
   var html = "";
-  html += "<button id=\"back\" title=\"Voltar ao inicio\" class=\"btn btn-primary btn-fab btn-raised mdi-navigation-arrow-back\"></button>";
+  html += "<button id=\"back\" title=\"Voltar ao inicio\" class=\"btn btn-warning btn-fab btn-raised mdi-navigation-arrow-back\"></button>";
   html += "<h3>Texto recebido:</h3>";
   html += "<div class=\"panel panel-primary\">";
   html += "<div class=\"panel-body\"><p align=\"justify\">"+data["@text"]+"</p></div>";
   html += "</div>";
   html += "<h3>Intervalo de confiança:</h3><br />";
   html += "<span class=\"text-arround\">"+data["@confidence"]+"</span>";
-  html += "<h3>Recursos:</h3>";
-  html += "<div class=\"panel-group\" id=\"accordion-result\" role=\"tablist\" aria-multiselectable=\"true\"></div>";
   self.html(html);
 
   /* Se houve marcações, então busca por resumo, imagem e link da wikipedia */ 
-  if(data["Resources"] != null) {
+  if(data["Resources"] != undefined) {
+    self
+      .append("<h3>Recursos:</h3>")
+      .append("<div class=\"panel-group\" id=\"accordion-result\" role=\"tablist\" aria-multiselectable=\"true\"></div>");
     $.each(data["Resources"], function(i, resources) {
       /* endpoint SPARQL */
       $.post("http://dbpedia.org/sparql",
@@ -46,9 +47,9 @@ jQuery.fn.toHTML = function(data) {
             html += "<div aria-expanded=\"false\" id=\"collapse"+i+"\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"heading"+i+"\">";
             html += "<div class=\"panel-body\">";
             html += "<div class=\"col-md-3\" style=\"text-align: center;\">";
-            html += "<img src=\""+imagem+"\"  class=\"img-responsive img-thumbnail\" />";
-            html += "<a href="+resources["@URI"]+" target=_blank>DBpedia</a><br />";
-            html += "<a href="+wikipedia+" target=_blank>Wikipédia</a><br />";
+            html += "<img src=\""+imagem+"\"  class=\"img-responsive img-thumbnail\" /><br />";
+            html += "<a class=\"btn btn-danger\" style=\"color: #fff\" href="+resources["@URI"]+" target=\"_blank\">DBpedia</a>";
+            html += "<a class=\"btn btn-danger\" style=\"color: #fff\" href="+wikipedia+" target=\"_blank\">Wikipédia</a><br />";
             html += "</div>";
             html += "<div class=\"col-md-9\">";
             html += "<p align=\"justify\">"+resumo+"</p>";
@@ -67,6 +68,9 @@ jQuery.fn.toHTML = function(data) {
         },
       "json");
     });
+  } else {
+    /* Exibe uma mensagem se não houver recursos */
+    self.append("<p align=\"center\"><br /><i class=\"fa fa-frown-o fa-5x\"></i><br /><br />Desculpe, não há recursos . . .</p>");
   }
 
   return this;
@@ -107,15 +111,14 @@ jQuery.fn.spotLight = function(options) {
   /* Mostra o icone carregando */
   $(".conteudo").slideUp("slow", function() {
     self
-      .html("<p align=\"center\"><br /><i class=\"fa fa-spinner fa-pulse fa-5x\"></i><br /><br />Aguarde, isso pode demorar um pouco . . .</p>")
+      .html("<div class=\"loader\"><svg class=\"circular\"><circle class=\"path\" cx=\"50\" cy=\"50\" r=\"20\" fill=\"none\" stroke-width=\"3\" stroke-miterlimit=\"10\"/></svg></div><p align=\"center\">Aguarde, isso pode demorar um pouco . . .</p>")
       .show();
-  });
-
-  /* Envie uma requisição post ao spotlight para objter as anotações */
-  $.post(server, settings, function (data) {
-    self.toHTML(data);
-	}, "json").fail(function() {
-    self.html("<p align=\"center\"><br /><i id=\"error\" style=\"color: #D32F2F\" class=\"fa fa-exclamation-triangle fa-5x\"></i><br /><br />Desculpe, houve um erro de conexão . . .</p>");
+    /* Envie uma requisição ao spotlight para objter as anotações */
+    $.post(server, settings, function (data) {
+      self.toHTML(data);
+    }, "json").fail(function() {
+      self.html("<p align=\"center\"><br /><i style=\"color: #D32F2F\" class=\"fa fa-exclamation-triangle fa-5x\"></i><br /><br />Desculpe, houve um erro de conexão . . .</p>");
+    });      
   });
 
   return this;
@@ -180,12 +183,6 @@ $(function() {
     $("#conteudo-equipe").slideDown("slow");
   });
 
-  /* Botão voltar */
-  $("#conteudo-resultados").on("click", "#back", function() {
-    $(".conteudo").hide();
-    $("#conteudo-inicio").slideDown("slow");
-  });
-
   /* Botão Enviar, Roda o Spotlight */
   $("#submit").click(function() {
     if($("#collapseOne").css("display") == "block") {
@@ -211,13 +208,19 @@ $(function() {
     }
   });
 
+  /* Botão voltar */
+  $("#conteudo-resultados").on("click", "#back", function() {
+    $(".conteudo").hide();
+    $("#conteudo-inicio").slideDown("slow");
+  });
+
   /* Botão para eliminar resultados */
   $("#conteudo-resultados").on("click", ".btn-close", function() {
     var panel = $(this).parent().parent();
     panel.fadeOut("slow", function() {
       var open = $(".panel-collapse", panel).attr("aria-expanded") == "true";
       panel.remove();
-      /* Abre o primeiro elemento */
+      /* Abre o primeiro elemento, se o elemento fechado estivesse aberto */
       if (open) {
         $(".panel-collapse", "#accordion-result")
           .first()

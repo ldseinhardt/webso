@@ -4,25 +4,44 @@ body {
   padding-bottom: 30px;
 } 
 
+/* Esconde conteudos na página inicial */
 #conteudo-sobre,
 #conteudo-equipe,
 #conteudo-resultados {
   display: none;
 }
 
+/* Mouse icone da "mão" para o nome do app */
+#menu-brand {
+  cursor: pointer;
+}
+
+/* Faz com que os elementos abaixo não poçam ser selecionados */
+#menu-brand, a, h1, h2, h3, h4, h5, h6, p, label {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Faz com que os links não sejam sublinhados e coloca o mouse icone da "mão" */
 a {
   cursor: pointer;
   text-decoration: none !important;
 }
 
+/* Configurações da entrada de texto */
 textarea {
-  min-height: 200px !important;
+  min-height: 220px !important;
   overflow: visible !important;
   resize: none;
   white-space: normal;
   text-align: justify;
 }
 
+/* Configurações do slider */
 #confidence {
   width: 35px;
   background: none !important;
@@ -34,20 +53,128 @@ textarea {
   width: 165px;
 }
 
+/* Indice de confiança arredondado */
 .text-arround {
   color: #fff;
-  background: #009688;
+  background: #ff5722;
   padding: 15px;
   border-radius: 50%;
 }
 
+/* Botão para excluir recursos */
 .btn-close {
   float: right;
   color: #f44336;
   cursor: pointer;
 }
 
-#equipe {
-  margin: auto;
-  width: 420px;
+/* Informações sobre e equipe alinhados ao centro */
+#conteudo-equipe .panel {
+  width: 450px;
+  margin: 0 auto;
+}
+
+#conteudo-sobre .panel {
+  width: 702px;
+  margin: 0 auto;
+}
+
+/* Cor laranja para os links de conteudos */
+.conteudo a {
+  color: #ff5722;
+}
+
+/* Abaixo configuração e animação do icone carregando */
+.loader {
+  margin: 10px auto;
+  width: 100px;
+  height: 100px;
+  zoom: 2;
+  -moz-transform: scale(2);
+}
+
+.circular {
+  -webkit-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
+  height: 100px;
+  position: relative;
+  width: 100px;
+}
+
+.path {
+  stroke-dasharray: 1,200;
+  stroke-dashoffset: 0;
+  -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124;
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124;
+  }
+}
+@-webkit-keyframes color {
+  100%, 0% {
+    stroke: #d62d20;
+  }
+  40% {
+    stroke: #0057e7;
+  }
+  66% {
+    stroke: #008744;
+  }
+  80%, 90% {
+    stroke: #ffa700;
+  }
+}
+@keyframes color {
+  100%, 0% {
+    stroke: #d62d20;
+  }
+  40% {
+    stroke: #0057e7;
+  }
+  66% {
+    stroke: #008744;
+  }
+  80%, 90% {
+    stroke: #ffa700;
+  }
 }
