@@ -77,7 +77,7 @@ jQuery.fn.spotLight = function(options) {
   var self = this;
 
   /* Servidor com problemas na rede ufpel */
-  //var server = "http://spotlight.sztaki.hu:2222/rest/annotate/";
+  //var server = "http://spotlight.sztaki.hu:2222/rest/annotate";
 
   /* Servidor dbpedia em manutenção */
   var server = "http://spotlight.dbpedia.org/rest/annotate";
@@ -114,7 +114,9 @@ jQuery.fn.spotLight = function(options) {
   /* Envie uma requisição post ao spotlight para objter as anotações */
   $.post(server, settings, function (data) {
     self.toHTML(data);
-	}, "json");
+	}, "json").fail(function() {
+    self.html("<p align=\"center\"><br /><i id=\"error\" style=\"color: #D32F2F\" class=\"fa fa-exclamation-triangle fa-5x\"></i><br /><br />Desculpe, houve um erro de conexão . . .</p>");
+  });
 
   return this;
 };
