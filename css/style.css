@@ -16,13 +16,16 @@ a {
 }
 
 textarea {
-  height: 200px !important;
+  min-height: 200px !important;
   overflow: visible !important;
+  resize: none;
+  white-space: normal;
+  text-align: justify;
 }
 
 #confidence {
-  width: 35px; 
-  background: #eee;
+  width: 35px;
+  background: none !important;
   text-align: center;
   border: 0;
 }
@@ -32,10 +35,10 @@ textarea {
 }
 
 .text-arround {
-  padding: 17px;
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 360px;
+  color: #fff;
+  background: #009688;
+  padding: 15px;
+  border-radius: 50%;
 }
 
 .btn-close {

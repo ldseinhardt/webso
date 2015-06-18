@@ -5,19 +5,17 @@
 jQuery.fn.toHTML = function(data) {
   var self = this;
   /* Mostra o botão voltar e os dados passados para o spotlight */
-  $(".conteudo").hide(function() {
-    var html = "";
-    html += "<button id=\"back\" class=\"btn btn-primary btn-fab btn-raised  mdi-navigation-arrow-back\"></button>";
-    html += "<h3>Texto recebido:</h3>";
-    html += "<div class=\"panel panel-primary\">";
-    html += "<div class=\"panel-body\"><p align=\"justify\">"+data["@text"]+"</p></div>";
-    html += "</div>";
-    html += "<h3>Intervalo de confiança:</h3>";
-    html += "<button class=\"btn btn-info text-arround\" disabled=\"disabled\">"+data["@confidence"]+"</button>";
-    html += "<h3>Recursos:</h3>";
-    html += "<div class=\"panel-group\" id=\"accordion-result\" role=\"tablist\" aria-multiselectable=\"true\"></div>";
-    self.html(html).slideDown("slow");
-  });
+  var html = "";
+  html += "<button id=\"back\" title=\"Voltar ao inicio\" class=\"btn btn-primary btn-fab btn-raised mdi-navigation-arrow-back\"></button>";
+  html += "<h3>Texto recebido:</h3>";
+  html += "<div class=\"panel panel-primary\">";
+  html += "<div class=\"panel-body\"><p align=\"justify\">"+data["@text"]+"</p></div>";
+  html += "</div>";
+  html += "<h3>Intervalo de confiança:</h3><br />";
+  html += "<span class=\"text-arround\">"+data["@confidence"]+"</span>";
+  html += "<h3>Recursos:</h3>";
+  html += "<div class=\"panel-group\" id=\"accordion-result\" role=\"tablist\" aria-multiselectable=\"true\"></div>";
+  self.html(html);
 
   /* Se houve marcações, então busca por resumo, imagem e link da wikipedia */ 
   if(data["Resources"] != null) {
@@ -43,7 +41,7 @@ jQuery.fn.toHTML = function(data) {
             html += "</a>";
             html += "<a class=\"anchorjs-link\" href=\"#-collapsible-result-group-item-#"+i+"-\"><span class=\"anchorjs-icon\"></span></a>";
             html += "</h4>";
-            html += "<span class=\"btn-close\"><i class=\"fa fa-times\"></i></span>";
+            html += "<span class=\"btn-close\" title=\"Excluir\"><i class=\"fa fa-times\"></i></span>";
             html += "</div>";
             html += "<div aria-expanded=\"false\" id=\"collapse"+i+"\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"heading"+i+"\">";
             html += "<div class=\"panel-body\">";
@@ -99,10 +97,17 @@ jQuery.fn.spotLight = function(options) {
 		$.extend(settings, options);
 	}
 
+  /* Insere o menu de resultados */
+  if (!$("#menu-result")[0]) {
+    $("#menu-inicio").after("<li id=\"menu-result\"><a class=\"mdi-content-create\" title=\"Resultados\"></a></li>"); 
+  }
+  $("#menu-inicio").removeClass("active");
+  $("#menu-result").addClass("active");
+
   /* Mostra o icone carregando */
   $(".conteudo").slideUp("slow", function() {
     self
-      .html("<p align=\"center\"><i class=\"fa fa-spinner fa-pulse fa-5x\"></i></p>")
+      .html("<p align=\"center\"><br /><i class=\"fa fa-spinner fa-pulse fa-5x\"></i><br /><br />Aguarde, isso pode demorar um pouco . . .</p>")
       .show();
   });
 
@@ -118,6 +123,9 @@ jQuery.fn.spotLight = function(options) {
 $(function() {
   /* Inicializa o tema Material Design */
   $.material.init();
+
+  /* Inicializa o tema do botão de arquivo */
+  $("#file").bootstrapFileInput();
 
   /* Configura o slider de confiaça */
   $("#confidence-slider").noUiSlider({
@@ -148,6 +156,14 @@ $(function() {
   $("#menu-inicio").click(function() {
     $(".conteudo").hide();
     $("#conteudo-inicio").slideDown("slow");
+  });
+
+  /* Menu: Resultados Click */
+  $("#navbar").on("click", "#menu-result", function() {
+    $("#navbar li").removeClass("active");
+    $(this).addClass("active");
+    $(".conteudo").hide();
+    $("#conteudo-resultados").slideDown("slow");
   });
 
   /* Menu: Sobre Click */
@@ -200,8 +216,6 @@ $(function() {
       var open = $(".panel-collapse", panel).attr("aria-expanded") == "true";
       panel.remove();
       /* Abre o primeiro elemento */
-
-      //alert($("#collapseTwo").attr("aria-expanded"));
       if (open) {
         $(".panel-collapse", "#accordion-result")
           .first()
