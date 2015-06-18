@@ -34,7 +34,7 @@ a {
 
 /* Configurações da entrada de texto */
 textarea {
-  min-height: 220px !important;
+  min-height: 195px !important;
   overflow: visible !important;
   resize: none;
   white-space: normal;

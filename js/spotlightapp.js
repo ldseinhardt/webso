@@ -109,7 +109,7 @@ jQuery.fn.spotLight = function(options) {
   $("#menu-result").addClass("active");
 
   /* Mostra o icone carregando */
-  $(".conteudo").slideUp("slow", function() {
+  $(".conteudo").slideUp().promise().always(function() {
     self
       .html("<div class=\"loader\"><svg class=\"circular\"><circle class=\"path\" cx=\"50\" cy=\"50\" r=\"20\" fill=\"none\" stroke-width=\"3\" stroke-miterlimit=\"10\"/></svg></div><p align=\"center\">Aguarde, isso pode demorar um pouco . . .</p>")
       .show();
@@ -220,11 +220,19 @@ $(function() {
     panel.fadeOut("slow", function() {
       var open = $(".panel-collapse", panel).attr("aria-expanded") == "true";
       panel.remove();
-      /* Abre o primeiro elemento, se o elemento fechado estivesse aberto */
-      if (open) {
-        $(".panel-collapse", "#accordion-result")
-          .first()
-          .collapse('show');
+      if ($(".panel-collapse", "#accordion-result").length > 0) {
+        /* Abre o primeiro elemento, se o elemento fechado estivesse aberto */
+        if (open) {
+          $(".panel-collapse", "#accordion-result")
+            .first()
+            .collapse('show');
+        }
+      } else {
+        /* Se não houver mais recursos então vai para o inicio */
+        $("#menu-result").remove();
+        $("#menu-inicio").addClass("active");
+        $(".conteudo").hide();
+        $("#conteudo-inicio").slideDown("slow");
       }
     });
   });
