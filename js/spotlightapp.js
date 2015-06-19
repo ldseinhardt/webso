@@ -25,14 +25,14 @@ jQuery.fn.toHTML = function(data) {
       $.post("http://dbpedia.org/sparql",
         {
           "default-graph-uri": "http://dbpedia.org",
-          "query" : "SELECT ?isPrimaryTopicOf ?thumbnail ?abstract WHERE { <" + resources["@URI"] + "> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ?isPrimaryTopicOf . <" + resources["@URI"] + "> <http://dbpedia.org/ontology/thumbnail> ?thumbnail . <" + resources["@URI"] + "> <http://dbpedia.org/ontology/abstract> ?abstract . FILTER (langMatches(lang(?abstract), \"pt\")) . }"
+          "query" : "SELECT ?resumo ?imagem ?pt WHERE { <" + resources["@URI"] + "> <http://dbpedia.org/ontology/abstract> ?resumo; <http://dbpedia.org/ontology/thumbnail> ?imagem; <http://www.w3.org/2002/07/owl#sameAs> ?pt. FILTER (contains(xsd:string(?pt), \"pt.dbpedia.org\") && langMatches(lang(?resumo), \"pt\"))}"
         },
         function(data) {
           var dados = data["results"]["bindings"][0];
           if (dados != null) {
-            var resumo = dados["abstract"]["value"];
-            var imagem = dados["thumbnail"]["value"];
-            var wikipedia = dados["isPrimaryTopicOf"]["value"];
+            var resumo = dados["resumo"]["value"];
+            var imagem = dados["imagem"]["value"];
+            var wikipedia = dados["pt"]["value"].replace("dbpedia.org/resource", "wikipedia.org/wiki");
             var html = "";
             html += "<div class=\"panel panel-default\">";
             html += "<div class=\"panel-heading\" role=\"tab\" id=\"heading_"+i+"\">";
@@ -109,7 +109,7 @@ jQuery.fn.spotLight = function(options) {
   $("#menu-result").addClass("active");
 
   /* Mostra o icone carregando */
-  $(".conteudo").slideUp().promise().always(function() {
+  $(".conteudo").slideUp("slow").promise().always(function() {
     self
       .html("<div class=\"loader\"><svg class=\"circular\"><circle class=\"path\" cx=\"50\" cy=\"50\" r=\"20\" fill=\"none\" stroke-width=\"3\" stroke-miterlimit=\"10\"/></svg></div><p align=\"center\">Aguarde, isso pode demorar um pouco . . .</p>")
       .show();
