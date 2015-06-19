@@ -210,6 +210,8 @@ $(function() {
 
   /* Botão voltar */
   $("#conteudo-resultados").on("click", "#back", function() {
+    $("#menu-result").removeClass("active");
+    $("#menu-inicio").addClass("active");
     $(".conteudo").hide();
     $("#conteudo-inicio").slideDown("slow");
   });
